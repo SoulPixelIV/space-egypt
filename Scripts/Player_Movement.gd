@@ -5,11 +5,17 @@ const JUMP_VELOCITY = 4.5
 
 var camera: Node3D
 
+@export var bullet: PackedScene
+
 func _ready() -> void:
 	camera = %Camera
 	camera.set_following(self)
 
 func _physics_process(delta: float) -> void:
+	#Shooting
+	if Input.is_action_just_pressed("shoot"):
+		weapon_shooting()
+		
 	#Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -33,3 +39,14 @@ func _physics_process(delta: float) -> void:
 	rotation.y = camera.rotation.y
 
 	move_and_slide()
+
+func weapon_shooting():
+	var bullet_inst = bullet.instantiate()
+	get_tree().current_scene.add_child(bullet_inst)
+
+	# Position vor dem Spieler
+	var spawn_offset = -camera.global_transform.basis.z * 1.5
+	bullet_inst.global_position = global_position + spawn_offset + Vector3.UP * 1.2
+
+	# Kamerarichtung
+	bullet_inst.direction = -camera.global_transform.basis.z

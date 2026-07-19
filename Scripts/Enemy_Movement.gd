@@ -11,7 +11,6 @@ const ARRIVAL_DISTANCE := 1.0
 @export var player: CharacterBody3D
 
 @onready var patrol_points = $"../PatrolPoints".get_children()
-@onready var raycast = $RayCast3D
 
 var current_point := 0
 var state = State.PATROL

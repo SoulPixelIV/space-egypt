@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bpe3hqsj578fb" path="res://Scripts/Player_Movement.gd" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://h6sjlq23ov2b" path="res://Prefabs/camera.tscn" id="1_go701"]
 [ext_resource type="Script" uid="uid://cnaat21qtehof" path="res://Scripts/Enemy_Movement.gd" id="4_8j60k"]
+[ext_resource type="PackedScene" uid="uid://dspeg51lom51d" path="res://Prefabs/bullet.tscn" id="4_fo5ed"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yp4wr"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -72,6 +73,7 @@ spring_length = 4.6
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1851812512 groups=["Player"]]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.6182132, 0)
 script = ExtResource("1_a02cp")
+bullet = ExtResource("4_fo5ed")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=73786173]
 shape = SubResource("CapsuleShape3D_yp4wr")
@@ -107,7 +109,7 @@ mesh = SubResource("BoxMesh_go701")
 shape = SubResource("BoxShape3D_a02cp")
 
 [node name="Enemy" type="CharacterBody3D" parent="." unique_id=506841067]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.48492, 6.9885993, 4.9395027)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.48492, 4.283342, 4.9395027)
 script = ExtResource("4_8j60k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy" unique_id=1284017347]

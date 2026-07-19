@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dspeg51lom51d"]
+
+[ext_resource type="Script" uid="uid://0yx4n0na53j3" path="res://Scripts/Bullet.gd" id="1_0oen4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7dga7"]
+albedo_color = Color(0, 0.6745098, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_0oen4"]
+material = SubResource("StandardMaterial3D_7dga7")
+
+[node name="Bullet" type="Node3D" unique_id=1751423889]
+script = ExtResource("1_0oen4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2143730024]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_0oen4")
