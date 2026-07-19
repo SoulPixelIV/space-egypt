@@ -30,11 +30,6 @@ func _physics_process(delta):
 			state = State.PATROL
 			print("PATROL")
 
-	if can_see_player():
-		state = State.CHASE
-	elif player == null:
-		state = State.PATROL
-
 	match state:
 		State.PATROL:
 			patrol(delta)
@@ -77,40 +72,15 @@ func move_to_position(target: Vector3, delta):
 
 	velocity.x = direction.x * SPEED
 	velocity.z = direction.z * SPEED
-	
-#Line of Sight	
-func can_see_player() -> bool:
-	if player == null:
-		return false
-
-	# Richtung zum Spieler
-	var direction = (player.global_position - global_position).normalized()
-
-	# Blickrichtung des Gegners
-	var forward = -transform.basis.z
-
-	# Winkel berechnen
-	var angle = rad_to_deg(acos(forward.dot(direction)))
-
-	if angle > 45:
-		return false
-
-	# RayCast auf Spieler richten
-	raycast.target_position = raycast.to_local(player.global_position)
-	raycast.force_raycast_update()
-
-	if raycast.is_colliding():
-		return raycast.get_collider() == player
-
-	return false
 
 #Area of Sight
-func _on_area_3d_body_entered(body):
+func _on_area_of_sight_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Player"):
 		player = body
+		state = State.CHASE
 		print("PLAYER COLLISION")
-		
+
 func _on_area_of_sight_body_exited(body: Node3D) -> void:
-	player = null
-	state = State.PATROL
+	#player = null
+	#state = State.PATROL
 	print("PLAYER EXIT")
