@@ -11,6 +11,7 @@ const ARRIVAL_DISTANCE := 1.0
 @export var player: CharacterBody3D
 
 @onready var patrol_points = $"../PatrolPoints".get_children()
+@onready var raycast = $RayCast3D
 
 var current_point := 0
 var state = State.PATROL
@@ -29,6 +30,11 @@ func _physics_process(delta):
 			state = State.PATROL
 			print("PATROL")
 
+	if can_see_player():
+		state = State.CHASE
+	elif player == null:
+		state = State.PATROL
+
 	match state:
 		State.PATROL:
 			patrol(delta)
@@ -37,7 +43,6 @@ func _physics_process(delta):
 			chase(delta)
 
 	move_and_slide()
-
 
 func patrol(delta):
 	if patrol_points.is_empty():
@@ -56,7 +61,6 @@ func chase(delta):
 
 	move_to_position(player.global_position, delta)
 
-
 func move_to_position(target: Vector3, delta):
 	var direction = target - global_position
 	direction.y = 0
@@ -73,3 +77,40 @@ func move_to_position(target: Vector3, delta):
 
 	velocity.x = direction.x * SPEED
 	velocity.z = direction.z * SPEED
+	
+#Line of Sight	
+func can_see_player() -> bool:
+	if player == null:
+		return false
+
+	# Richtung zum Spieler
+	var direction = (player.global_position - global_position).normalized()
+
+	# Blickrichtung des Gegners
+	var forward = -transform.basis.z
+
+	# Winkel berechnen
+	var angle = rad_to_deg(acos(forward.dot(direction)))
+
+	if angle > 45:
+		return false
+
+	# RayCast auf Spieler richten
+	raycast.target_position = raycast.to_local(player.global_position)
+	raycast.force_raycast_update()
+
+	if raycast.is_colliding():
+		return raycast.get_collider() == player
+
+	return false
+
+#Area of Sight
+func _on_area_3d_body_entered(body):
+	if body.is_in_group("Player"):
+		player = body
+		print("PLAYER COLLISION")
+		
+func _on_area_of_sight_body_exited(body: Node3D) -> void:
+	player = null
+	state = State.PATROL
+	print("PLAYER EXIT")

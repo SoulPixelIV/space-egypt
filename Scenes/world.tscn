@@ -37,6 +37,15 @@ albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_fo5ed"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_8j60k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ukr8"]
+transparency = 1
+albedo_color = Color(1, 0.29411766, 1, 0.2784314)
+
+[sub_resource type="SphereMesh" id="SphereMesh_o06y3"]
+material = SubResource("StandardMaterial3D_5ukr8")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fo5ed"]
 albedo_color = Color(0, 1, 0, 1)
 
@@ -58,7 +67,7 @@ shadow_enabled = true
 unique_name_in_owner = true
 spring_length = 4.6
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=1851812512]
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1851812512 groups=["Player"]]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.6182132, 0)
 script = ExtResource("1_a02cp")
 
@@ -95,10 +104,9 @@ mesh = SubResource("BoxMesh_go701")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor3/StaticBody3D" unique_id=349279925]
 shape = SubResource("BoxShape3D_a02cp")
 
-[node name="Enemy" type="CharacterBody3D" parent="." unique_id=506841067 node_paths=PackedStringArray("player")]
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=506841067]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.48492, 6.9885993, 4.9395027)
 script = ExtResource("4_8j60k")
-player = NodePath("../Player")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy" unique_id=1284017347]
 material_override = SubResource("StandardMaterial3D_5a7ea")
@@ -111,6 +119,18 @@ shape = SubResource("CapsuleShape3D_5a7ea")
 transform = Transform3D(0.75, 0, 0, 0, -6.862688e-09, -0.75, 0, 0.157, -3.278354e-08, 0, 0.33434963, 0.47506905)
 material_override = SubResource("StandardMaterial3D_8j60k")
 mesh = SubResource("CylinderMesh_fo5ed")
+
+[node name="AreaOfSight" type="Area3D" parent="Enemy" unique_id=2020482848]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/AreaOfSight" unique_id=544349258]
+transform = Transform3D(13, 0, 0, 0, 13, 0, 0, 0, 13, 0, 0, 0)
+shape = SubResource("SphereShape3D_8j60k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy/AreaOfSight" unique_id=1095868909]
+transform = Transform3D(13, 0, 0, 0, 13, 0, 0, 0, 13, 0, 0, 0)
+mesh = SubResource("SphereMesh_o06y3")
+
+[node name="RayCast3D" type="RayCast3D" parent="Enemy" unique_id=1592157558]
 
 [node name="PatrolPoints" type="Node" parent="." unique_id=1858391586]
 
@@ -133,3 +153,14 @@ mesh = SubResource("BoxMesh_5ukr8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.394165, 3.8034859, 12.81752)
 material_override = SubResource("StandardMaterial3D_fo5ed")
 mesh = SubResource("BoxMesh_5ukr8")
+
+[node name="Label" type="Label" parent="." unique_id=466519316]
+offset_left = 876.0
+offset_top = 12.0
+offset_right = 1135.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 24
+text = "F - Switch Enemy State"
+
+[connection signal="body_entered" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_exited"]
