@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://h6sjlq23ov2b" path="res://Prefabs/camera.tscn" id="1_go701"]
 [ext_resource type="Script" uid="uid://cnaat21qtehof" path="res://Scripts/Enemy_Movement.gd" id="4_8j60k"]
 [ext_resource type="PackedScene" uid="uid://dspeg51lom51d" path="res://Prefabs/bullet.tscn" id="4_fo5ed"]
+[ext_resource type="PackedScene" uid="uid://bm8e0nptlqrn2" path="res://Prefabs/fog_cloud.tscn" id="6_5ukr8"]
+[ext_resource type="Script" uid="uid://d26o30ger6ih5" path="res://Scripts/Fog_Manager.gd" id="7_o06y3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yp4wr"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -189,6 +191,11 @@ offset_right = 1135.0
 offset_bottom = 46.0
 theme_override_font_sizes/font_size = 24
 text = "F - Switch Enemy State"
+
+[node name="FogManager" type="Node3D" parent="." unique_id=1066880226 node_paths=PackedStringArray("player")]
+script = ExtResource("7_o06y3")
+fog_scene = ExtResource("6_5ukr8")
+player = NodePath("../Player")
 
 [connection signal="body_entered" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_exited"]

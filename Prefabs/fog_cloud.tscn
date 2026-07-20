@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bm8e0nptlqrn2"]
+
+[ext_resource type="Script" uid="uid://cm5s6jok2ania" path="res://Scripts/Fog.gd" id="1_2k6ii"]
+[ext_resource type="Texture2D" uid="uid://bbvwh1l54f1sd" path="res://Textures/fog.png" id="1_36tgr"]
+
+[node name="FogCloud" type="Node3D" unique_id=297767407]
+script = ExtResource("1_2k6ii")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=4281871]
+billboard = 1
+texture = ExtResource("1_36tgr")
