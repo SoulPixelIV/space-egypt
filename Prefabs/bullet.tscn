@@ -8,9 +8,19 @@ albedo_color = Color(0, 0.6745098, 0, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_0oen4"]
 material = SubResource("StandardMaterial3D_7dga7")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_0oen4"]
+
 [node name="Bullet" type="Node3D" unique_id=1751423889]
 script = ExtResource("1_0oen4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2143730024]
+[node name="Area3D" type="Area3D" parent="." unique_id=1433609659]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=2143730024]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("SphereMesh_0oen4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=343439201]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+shape = SubResource("SphereShape3D_0oen4")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

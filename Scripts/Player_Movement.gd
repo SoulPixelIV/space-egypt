@@ -7,6 +7,8 @@ var camera: Node3D
 
 @export var bullet: PackedScene
 
+@onready var shoot_point = $ShootPoint
+
 func _ready() -> void:
 	camera = %Camera
 	camera.set_following(self)
@@ -44,9 +46,7 @@ func weapon_shooting():
 	var bullet_inst = bullet.instantiate()
 	get_tree().current_scene.add_child(bullet_inst)
 
-	# Position vor dem Spieler
-	var spawn_offset = -camera.global_transform.basis.z * 1.5
-	bullet_inst.global_position = global_position + spawn_offset + Vector3.UP * 1.2
+	bullet_inst.global_position = shoot_point.global_position
 
 	# Kamerarichtung
 	bullet_inst.direction = -camera.global_transform.basis.z
