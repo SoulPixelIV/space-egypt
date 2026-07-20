@@ -3,17 +3,17 @@
 [ext_resource type="Script" uid="uid://cllgieohd2wcj" path="res://Scripts/Game_Manager.gd" id="1_5a7ea"]
 [ext_resource type="Script" uid="uid://bpe3hqsj578fb" path="res://Scripts/Player_Movement.gd" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://h6sjlq23ov2b" path="res://Prefabs/camera.tscn" id="1_go701"]
+[ext_resource type="Texture2D" uid="uid://bquqr4lgcn7o8" path="res://Textures/skybox_space.jpg" id="2_k7acu"]
 [ext_resource type="Script" uid="uid://cnaat21qtehof" path="res://Scripts/Enemy_Movement.gd" id="4_8j60k"]
 [ext_resource type="PackedScene" uid="uid://dspeg51lom51d" path="res://Prefabs/bullet.tscn" id="4_fo5ed"]
 [ext_resource type="PackedScene" uid="uid://bm8e0nptlqrn2" path="res://Prefabs/fog_cloud.tscn" id="6_5ukr8"]
 [ext_resource type="Script" uid="uid://d26o30ger6ih5" path="res://Scripts/Fog_Manager.gd" id="7_o06y3"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yp4wr"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5v1tr"]
+panorama = ExtResource("2_k7acu")
 
 [sub_resource type="Sky" id="Sky_a02cp"]
-sky_material = SubResource("ProceduralSkyMaterial_yp4wr")
+sky_material = SubResource("PanoramaSkyMaterial_5v1tr")
 
 [sub_resource type="Environment" id="Environment_go701"]
 background_mode = 2

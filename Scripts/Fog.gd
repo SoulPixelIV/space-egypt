@@ -23,6 +23,19 @@ func _ready():
 	# Zufällige Schwebephase
 	float_offset = randf_range(0.0, TAU)
 	float_speed = randf_range(0.5, 1.5)
+	
+	#Random Color
+	var base_color = Color(0.227, 0.0, 0.565, 1.0)
+
+	var variation := 0.15
+	var random_color = Color(
+		clamp(base_color.r + randf_range(-variation, variation), 0.0, 1.0),
+		clamp(base_color.g + randf_range(-variation, variation), 0.0, 1.0),
+		clamp(base_color.b + randf_range(-variation, variation), 0.0, 1.0),
+		1.0
+	)
+
+	sprite.modulate = random_color
 
 func _process(delta):
 	if player == null:

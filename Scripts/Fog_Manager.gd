@@ -3,8 +3,8 @@ extends Node3D
 @export var fog_scene: PackedScene
 @export var player: Node3D
 
-@export var size := 20
-@export var spacing := 3.0
+@export var size := 15
+@export var spacing := 2.0
 
 func _ready():
 	for x in range(-size, size):
@@ -19,7 +19,7 @@ func _ready():
 			randf_range(-1.5, 1.5)
 			)
 
-			var fog_height = randf_range(1.5, 5.0)
+			var fog_height = randf_range(-10.0, 10.0)
 
 			fog.global_position = Vector3(
 				x * spacing + randf_range(-1.5,1.5),
