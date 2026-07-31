@@ -2,7 +2,7 @@ extends Node3D
 
 @export var reveal_distance := 8.0
 @export var fade_speed := 5.0
-@export var min_scale := 0.8
+@export var min_scale := 1.4
 @export var max_scale := 2.4
 
 var player: Node3D
@@ -10,6 +10,7 @@ var start_position: Vector3
 var float_offset := 0.0
 var float_speed := 1.0
 var float_height := 0.2
+var sight_areas: Array[Area3D] = []
 
 @onready var sprite: Sprite3D = $Sprite3D
 
@@ -37,14 +38,27 @@ func _ready():
 
 	sprite.modulate = random_color
 
-func _process(delta):
-	if player == null:
-		return
-
+func _process(delta: float) -> void:
 	var target_alpha := 1.0
 
-	if global_position.distance_to(player.global_position) < reveal_distance:
-		target_alpha = 0.0
+	#Invisible around Player
+	if player != null:
+		if global_position.distance_to(player.global_position) < reveal_distance:
+			target_alpha = 0.0
+
+	var query := PhysicsPointQueryParameters3D.new()
+	query.position = global_position
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+
+	var hits := get_world_3d().direct_space_state.intersect_point(query)
+
+	for hit in hits:
+		var area := hit["collider"] as Area3D
+
+		if area != null and area.is_in_group("enemy_sight_areas"):
+			target_alpha = 0.0
+			break
 
 	sprite.modulate.a = move_toward(
 		sprite.modulate.a,

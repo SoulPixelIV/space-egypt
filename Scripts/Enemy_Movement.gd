@@ -12,8 +12,26 @@ const ARRIVAL_DISTANCE := 1.0
 
 @onready var patrol_points = $"../PatrolPoints".get_children()
 
+@onready var area_of_sight: Area3D = $AreaOfSight
+@onready var line_of_sight: MeshInstance3D = $AreaOfSight/LineOfSight
+@onready var sight_collision: CollisionShape3D = $AreaOfSight/CollisionShape3D
+
+@onready var visible_area: Area3D = $VisibleArea
+@onready var visible_collision: CollisionShape3D = $VisibleArea/CollisionShape3D
+
 var current_point := 0
 var state = State.PATROL
+
+func _ready() -> void:
+	# Damit Fog ausschließlich diese Areas als Sichtbereiche erkennt.
+	area_of_sight.add_to_group("enemy_sight_areas")
+	visible_area.add_to_group("enemy_sight_areas")
+
+	# Erstellt eine passende CollisionShape aus deinem Sichtkegel-Mesh.
+	sight_collision.shape = line_of_sight.mesh.create_convex_shape()
+
+	# Wichtig, falls dein Mesh gedreht oder verschoben wurde.
+	sight_collision.transform = line_of_sight.transform
 
 func _physics_process(delta):
 	# Gravity
