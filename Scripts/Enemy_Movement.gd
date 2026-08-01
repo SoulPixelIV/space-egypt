@@ -11,6 +11,7 @@ const ARRIVAL_DISTANCE := 1.0
 @export var player: CharacterBody3D
 
 @onready var patrol_points = $"../PatrolPoints".get_children()
+@onready var spotlight: Area3D = $Spotlight
 
 @onready var area_of_sight: Area3D = $AreaOfSight
 @onready var line_of_sight: MeshInstance3D = $AreaOfSight/LineOfSight
@@ -32,6 +33,8 @@ func _ready() -> void:
 
 	# Wichtig, falls dein Mesh gedreht oder verschoben wurde.
 	sight_collision.transform = line_of_sight.transform
+	
+	spotlight.tree_exited.connect(_on_spotlight_destroyed)
 
 func _physics_process(delta):
 	# Gravity
@@ -101,3 +104,6 @@ func _on_area_of_sight_body_exited(body: Node3D) -> void:
 	#player = null
 	#state = State.PATROL
 	print("PLAYER EXIT")
+
+func _on_spotlight_destroyed() -> void:
+	queue_free()

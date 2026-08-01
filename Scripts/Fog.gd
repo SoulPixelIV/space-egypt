@@ -1,6 +1,8 @@
 extends Node3D
 
 @export var reveal_distance := 8.0
+@export var max_reveal_distance := 12.0 # Helligkeit 0
+@export var min_reveal_distance := 3.0  # Dunkelheit 100
 @export var fade_speed := 5.0
 @export var min_scale := 1.4
 @export var max_scale := 2.4
@@ -43,7 +45,7 @@ func _process(delta: float) -> void:
 
 	#Invisible around Player
 	if player != null:
-		if global_position.distance_to(player.global_position) < reveal_distance:
+		if global_position.distance_to(player.global_position) < get_reveal_distance():
 			target_alpha = 0.0
 
 	var query := PhysicsPointQueryParameters3D.new()
@@ -65,3 +67,7 @@ func _process(delta: float) -> void:
 		target_alpha,
 		fade_speed * delta
 	)
+
+func get_reveal_distance() -> float:
+	var darkness: float = clampf(float(Globals.darkness_level), 0.0, 100.0) / 100.0
+	return lerpf(max_reveal_distance, min_reveal_distance, darkness)

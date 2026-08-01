@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dspeg51lom51d" path="res://Prefabs/bullet.tscn" id="4_fo5ed"]
 [ext_resource type="PackedScene" uid="uid://bm8e0nptlqrn2" path="res://Prefabs/fog_cloud.tscn" id="6_5ukr8"]
 [ext_resource type="Script" uid="uid://d26o30ger6ih5" path="res://Scripts/Fog_Manager.gd" id="7_o06y3"]
+[ext_resource type="Script" uid="uid://5dlmwuso7r64" path="res://Scripts/UI_Control.gd" id="9_5v1tr"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5v1tr"]
 panorama = ExtResource("2_k7acu")
@@ -208,18 +209,60 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.394165, 3.8034859, 12.8175
 material_override = SubResource("StandardMaterial3D_fo5ed")
 mesh = SubResource("BoxMesh_5ukr8")
 
-[node name="Label" type="Label" parent="." unique_id=466519316]
-offset_left = 876.0
-offset_top = 12.0
-offset_right = 1135.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 24
-text = "F - Switch Enemy State"
-
 [node name="FogManager" type="Node3D" parent="." unique_id=1066880226 node_paths=PackedStringArray("player")]
 script = ExtResource("7_o06y3")
 fog_scene = ExtResource("6_5ukr8")
 player = NodePath("../Player")
+
+[node name="UI" type="Control" parent="." unique_id=2010694374]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_5v1tr")
+
+[node name="DarknessLevelMax" type="Label" parent="UI" unique_id=1954265424]
+layout_mode = 0
+offset_left = 255.0
+offset_top = 14.0
+offset_right = 318.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 24
+text = "/100"
+
+[node name="DarknessLevel" type="Label" parent="UI" unique_id=1116708030]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 14.0
+offset_right = 254.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 24
+text = "100"
+
+[node name="Darkness" type="Label" parent="UI" unique_id=521916200]
+layout_mode = 1
+offset_left = 21.0
+offset_top = 14.0
+offset_right = 230.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 24
+text = "World Darkness: "
+
+[node name="EnemyState" type="Label" parent="UI" unique_id=466519316]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -281.0
+offset_top = 16.0
+offset_right = -22.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "F - Switch Enemy State"
 
 [connection signal="body_entered" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_exited"]
