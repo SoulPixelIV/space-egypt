@@ -24,7 +24,7 @@ const ARRIVAL_DISTANCE := 1.0
 
 var current_point := 0
 var state = State.IDLE
-var current_state = State.IDLE
+var current_state = ""
 
 func _ready() -> void:
 	# Damit Fog ausschließlich diese Areas als Sichtbereiche erkennt.
@@ -56,19 +56,20 @@ func _physics_process(delta):
 	match state:
 		State.PATROL:
 			patrol(delta)
-			current_state = State.PATROL
+			current_state = "Patrolling"
 
 		State.CHASE:
 			chase(delta)
 			current_state = State.CHASE
+			current_state = "Chasing"
 			
 		State.IDLE:
 			idle(delta)
-			current_state = State.IDLE
+			current_state = "Idling"
 
 	move_and_slide()
 	
-	state_text.text = str(current_state)
+	state_text.text = current_state
 
 func patrol(delta):
 	if patrol_points.is_empty():
