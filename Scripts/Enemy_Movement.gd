@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 enum State {
+	IDLE,
 	PATROL,
 	CHASE
 }
@@ -12,6 +13,7 @@ const ARRIVAL_DISTANCE := 1.0
 
 @onready var patrol_points = $"../PatrolPoints".get_children()
 @onready var spotlight: Area3D = $Spotlight
+@onready var state_text: Label3D = $EnemyStateText
 
 @onready var area_of_sight: Area3D = $AreaOfSight
 @onready var line_of_sight: MeshInstance3D = $AreaOfSight/LineOfSight
@@ -21,7 +23,8 @@ const ARRIVAL_DISTANCE := 1.0
 @onready var visible_collision: CollisionShape3D = $VisibleArea/CollisionShape3D
 
 var current_point := 0
-var state = State.PATROL
+var state = State.IDLE
+var current_state = State.IDLE
 
 func _ready() -> void:
 	# Damit Fog ausschließlich diese Areas als Sichtbereiche erkennt.
@@ -53,11 +56,19 @@ func _physics_process(delta):
 	match state:
 		State.PATROL:
 			patrol(delta)
+			current_state = State.PATROL
 
 		State.CHASE:
 			chase(delta)
+			current_state = State.CHASE
+			
+		State.IDLE:
+			idle(delta)
+			current_state = State.IDLE
 
 	move_and_slide()
+	
+	state_text.text = str(current_state)
 
 func patrol(delta):
 	if patrol_points.is_empty():
@@ -75,6 +86,10 @@ func chase(delta):
 		return
 
 	move_to_position(player.global_position, delta)
+
+func idle(delta):
+	velocity.x = 0
+	velocity.z = 0
 
 func move_to_position(target: Vector3, delta):
 	var direction = target - global_position

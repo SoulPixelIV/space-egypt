@@ -238,6 +238,17 @@ mesh = SubResource("CylinderMesh_fo5ed")
 transform = Transform3D(1, 0, 0, 0, -1.1054787e-08, -1, 0, 0.25290406, -4.371139e-08, 0, 0.352, 0.442)
 shape = SubResource("CylinderShape3D_fo5ed")
 
+[node name="EnemyText" type="Label3D" parent="Enemy" unique_id=179928072]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.351388, 0)
+offset = Vector2(-56.7, 0)
+text = "Enemy State: "
+
+[node name="EnemyStateText" type="Label3D" parent="Enemy" unique_id=300251769]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.351388, 0)
+offset = Vector2(43.26, 0)
+text = "Patrolling"
+horizontal_alignment = 0
+
 [node name="PatrolPoints" type="Node" parent="." unique_id=1858391586]
 
 [node name="PatrolPoint1" type="MeshInstance3D" parent="PatrolPoints" unique_id=1029965155]
