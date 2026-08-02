@@ -3,13 +3,14 @@ extends CharacterBody3D
 enum State {
 	IDLE,
 	PATROL,
-	CHASE
+	CHASE,
+	STUCK
 }
 
-const SPEED := 3.5
 const ARRIVAL_DISTANCE := 1.0
 
 @export var player: CharacterBody3D
+@export var speed := 2.5
 
 @onready var patrol_points = $"../PatrolPoints".get_children()
 @onready var spotlight: Area3D = $Spotlight
@@ -66,8 +67,21 @@ func _physics_process(delta):
 		State.IDLE:
 			idle(delta)
 			current_state = "Idling"
+			
+		State.STUCK:
+			stuck()
+			current_state = "Stuck"
 
 	move_and_slide()
+	
+	#Check for Collision with Enemy Holder
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var hit_body := collision.get_collider() as Node3D
+
+		if hit_body and hit_body.is_in_group("enemy_holder"):
+			state = State.STUCK
+			print("YES - enemy stuck")
 	
 	state_text.text = current_state
 
@@ -92,6 +106,10 @@ func idle(delta):
 	velocity.x = 0
 	velocity.z = 0
 
+func stuck() -> void:
+	velocity.x = 0
+	velocity.z = 0
+
 func move_to_position(target: Vector3, delta):
 	var direction = target - global_position
 	direction.y = 0
@@ -106,8 +124,8 @@ func move_to_position(target: Vector3, delta):
 	var target_angle = atan2(direction.x, direction.z)
 	rotation.y = lerp_angle(rotation.y, target_angle, 8.0 * delta)
 
-	velocity.x = direction.x * SPEED
-	velocity.z = direction.z * SPEED
+	velocity.x = direction.x * speed
+	velocity.z = direction.z * speed
 
 #Area of Sight
 func _on_area_of_sight_body_entered(body: Node3D) -> void:
@@ -120,6 +138,11 @@ func _on_area_of_sight_body_exited(body: Node3D) -> void:
 	#player = null
 	#state = State.PATROL
 	print("PLAYER EXIT")
+
+func _on_collision_zone_body_entered(body: Node3D) -> void:
+	#if body.is_in_group("enemy_holder"):
+	state = State.STUCK
+	print("YES")
 
 func _on_spotlight_destroyed() -> void:
 	queue_free()
