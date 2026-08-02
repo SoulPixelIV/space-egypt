@@ -11,7 +11,6 @@ func _process(_delta: float) -> void:
 	# Speichert die Gegneranzahl einmal, sobald Gegner vorhanden sind.
 	if max_enemy_count == 0 and current_enemy_count > 0:
 		max_enemy_count = current_enemy_count
-	print(current_enemy_count)
 	# Alle Gegner leben = hell (0).
 	# Keine Gegner leben = dunkel (100).
 	if max_enemy_count > 0:
