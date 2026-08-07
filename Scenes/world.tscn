@@ -189,6 +189,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_kne5k")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0fj1v"]
+albedo_color = Color(1, 0.29803923, 0.14509805, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ikia7"]
+material = SubResource("StandardMaterial3D_0fj1v")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7yui6"]
+
 [node name="World" type="Node3D" unique_id=263138717]
 
 [node name="UI" type="Control" parent="." unique_id=2010694374]
@@ -249,13 +257,43 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -352.0
-offset_top = -225.0
+offset_top = -238.0
 offset_right = 352.0
-offset_bottom = -175.0
+offset_bottom = -188.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 36
 text = "Enemy defeated. The Darkness returns..."
+
+[node name="EnemyState2" type="Label" parent="UI" unique_id=791565256]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -281.0
+offset_top = 46.0
+offset_right = -22.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "P - Restart Level"
+
+[node name="MessageText2" type="Label" parent="UI" unique_id=1609502820]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -187.0
+offset_right = 352.0
+offset_bottom = -137.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Press \"P\" to restart Level"
+horizontal_alignment = 1
 
 [node name="GameManager" type="Node" parent="." unique_id=1836719148]
 script = ExtResource("1_5a7ea")
@@ -374,7 +412,7 @@ script = ExtResource("7_o06y3")
 fog_scene = ExtResource("6_5ukr8")
 player = NodePath("../Player")
 
-[node name="Tutorial" type="Node3D" parent="." unique_id=1136264571]
+[node name="Tutorial" type="Node" parent="." unique_id=527489511]
 
 [node name="TutorialBridge2" type="MeshInstance3D" parent="Tutorial" unique_id=1088805384 groups=["solid"]]
 transform = Transform3D(1.4425017, -0.28416285, 1.3948103, 1.1926572, 0.39122793, -0.055779606, -0.51358205, 0.11039249, 3.78808, 30.850718, 4.380585, -7.329152)
@@ -403,7 +441,7 @@ mesh = SubResource("CylinderMesh_5v1tr")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Tutorial/TutorialIsland/StaticBody3D" unique_id=765693147]
 shape = SubResource("CylinderShape3D_0fj1v")
 
-[node name="Main" type="Node3D" parent="." unique_id=217231659]
+[node name="Main" type="Node" parent="." unique_id=1060303182]
 
 [node name="MainIsland" type="CSGCombiner3D" parent="Main" unique_id=1331044867]
 transform = Transform3D(1.5, 0, 0, 0, 22, 0, 0, 0, 1.5, -16.208937, -11.656036, 2.8971045)
@@ -453,6 +491,19 @@ shape = SubResource("BoxShape3D_5v1tr")
 [node name="Pyramid" type="MeshInstance3D" parent="Main" unique_id=1672705687]
 transform = Transform3D(12.914438, 0, -1.4890642, 0, 13, 0, 1.4890642, 0, 12.914438, 57.36016, 19.358063, -80.210526)
 mesh = SubResource("ArrayMesh_ikia7")
+
+[node name="DarknessGate" type="MeshInstance3D" parent="Main" unique_id=681165557]
+transform = Transform3D(1.1469713, 0, 4.5399594, 0, 6.778901, 0, 0.24867563, 0, -20.939747, 43.8224, 8.622127, -60.88441)
+mesh = SubResource("BoxMesh_ikia7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Main/DarknessGate" unique_id=1987979830]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main/DarknessGate/StaticBody3D" unique_id=526981266]
+shape = SubResource("BoxShape3D_7yui6")
+
+[node name="text" type="Label3D" parent="Main/DarknessGate" unique_id=538282966]
+transform = Transform3D(-0.0074694157, 0, 0.9999723, 0, 1, 0, -0.9999723, 0, -0.0074703544, -0.69615173, 0, -0.008267403)
+text = "Darkness < 50"
 
 [connection signal="body_entered" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_exited"]

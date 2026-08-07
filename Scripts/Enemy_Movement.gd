@@ -145,5 +145,7 @@ func _on_collision_zone_body_entered(body: Node3D) -> void:
 	print("YES")
 
 func _on_spotlight_destroyed() -> void:
-	get_tree().call_group("ui_control", "show_enemy_defeated")
+	var tree := get_tree()
+	if tree:
+		get_tree().call_group("ui_control", "show_enemy_defeated")
 	queue_free()

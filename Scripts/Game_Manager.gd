@@ -17,3 +17,7 @@ func _process(_delta: float) -> void:
 		Globals.darkness_level = 100.0 * (1.0 - float(current_enemy_count) / float(max_enemy_count))
 	else:
 		Globals.darkness_level = 100.0
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("restart_level"):
+		get_tree().reload_current_scene()
