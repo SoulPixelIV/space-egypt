@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://5dlmwuso7r64" path="res://Scripts/UI_Control.gd" id="9_5v1tr"]
 [ext_resource type="Texture2D" uid="uid://bib7762bs3xrr" path="res://Models/space-island_pyramid512.png" id="10_0fj1v"]
 [ext_resource type="Script" uid="uid://c8utj2xjuaqeh" path="res://Scripts/Darkness_Gate.gd" id="11_ikia7"]
+[ext_resource type="Script" uid="uid://bofn4tvijfnpi" path="res://Scripts/Secret.gd" id="12_7yui6"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5v1tr"]
 panorama = ExtResource("2_k7acu")
@@ -198,6 +199,17 @@ material = SubResource("StandardMaterial3D_0fj1v")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7yui6"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ikia7"]
+albedo_color = Color(0.15686275, 1, 1, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.32
+
+[sub_resource type="SphereMesh" id="SphereMesh_7yui6"]
+material = SubResource("StandardMaterial3D_ikia7")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c5t2i"]
+
 [node name="World" type="Node3D" unique_id=263138717]
 
 [node name="UI" type="Control" parent="." unique_id=2010694374]
@@ -295,6 +307,33 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 36
 text = "Press \"P\" to restart Level"
 horizontal_alignment = 1
+
+[node name="Secret" type="Label" parent="UI" unique_id=2147414597]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 44.0
+offset_right = 230.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 24
+text = "Secrets:"
+
+[node name="SecretLevel" type="Label" parent="UI" unique_id=1306528989]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 44.0
+offset_right = 155.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="SecretLevelMax" type="Label" parent="UI" unique_id=986311785]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 44.0
+offset_right = 171.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 24
+text = "/1"
 
 [node name="GameManager" type="Node" parent="." unique_id=1836719148]
 script = ExtResource("1_5a7ea")
@@ -506,6 +545,25 @@ shape = SubResource("BoxShape3D_7yui6")
 [node name="text" type="Label3D" parent="Main/DarknessGate" unique_id=538282966]
 transform = Transform3D(-0.0074694157, 0, 0.9999723, 0, 1, 0, -0.9999723, 0, -0.0074703544, -0.69615173, 0, -0.008267403)
 text = "Darkness < 50"
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Main" unique_id=984274475]
+transform = Transform3D(-1.1591779, 0, 5.330045, 0, 4.1248884, 0, 0.6759039, 0, 9.141049, 57.678654, 6.113059, -101.89998)
+mesh = SubResource("BoxMesh_5v1tr")
+
+[node name="Secret" type="MeshInstance3D" parent="Main" unique_id=919975734]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 54.82568, 7.4025145, -100.58356)
+mesh = SubResource("SphereMesh_7yui6")
+
+[node name="Area3D" type="Area3D" parent="Main/Secret" unique_id=769839522]
+script = ExtResource("12_7yui6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main/Secret/Area3D" unique_id=1046054482]
+shape = SubResource("SphereShape3D_c5t2i")
+
+[node name="Label3D" type="Label3D" parent="Main/Secret" unique_id=1446188854]
+transform = Transform3D(0.54724187, 0, -0.8369745, 0, 1, 0, 0.8369745, 0, 0.54724187, 0, 0.7890353, 0)
+modulate = Color(0, 0.8135975, 0.81359726, 1)
+text = "SECRET"
 
 [connection signal="body_entered" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="Enemy/AreaOfSight" to="Enemy" method="_on_area_of_sight_body_exited"]
