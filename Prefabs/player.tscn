@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cngi1gcx6n7t0"]
+
+[ext_resource type="Script" uid="uid://bpe3hqsj578fb" path="res://Scripts/Player_Movement.gd" id="1_5wxv7"]
+[ext_resource type="PackedScene" uid="uid://dspeg51lom51d" path="res://Prefabs/bullet.tscn" id="2_y5hcb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yp4wr"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a02cp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ukr8"]
+albedo_color = Color(1, 0.34117648, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o06y3"]
+material = SubResource("StandardMaterial3D_5ukr8")
+
+[node name="Player" type="CharacterBody3D" unique_id=268844224 groups=["Player"]]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("1_5wxv7")
+bullet = ExtResource("2_y5hcb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2013114740]
+shape = SubResource("CapsuleShape3D_yp4wr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1428778914]
+mesh = SubResource("CapsuleMesh_a02cp")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1899122650]
+transform = Transform3D(-6.403819e-08, 0, 0.13014254, 0, 0.16417098, 0, -1.465023, 0, -5.6887117e-09, 0.7375337, 0.3710115, -0.5992892)
+mesh = SubResource("BoxMesh_o06y3")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=2116719211]
+transform = Transform3D(-6.565472e-09, 0, 0.1301424, 0, 0.58335, 0, -0.15020049, 0, -5.688706e-09, 0.7375332, 0.15775716, 0.05614191)
+mesh = SubResource("BoxMesh_o06y3")
+
+[node name="ShootPoint" type="Node3D" parent="." unique_id=19522941]
+transform = Transform3D(0.99999946, 0, 0, 0, 1, 0, 0, 0, 0.99999946, 0.7399521, 0.36481762, -1.232539)
