@@ -10,7 +10,7 @@ func _ready() -> void:
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 
 func _process(_delta: float) -> void:
-	var should_be_passable: bool = Globals.darkness_level < 50.0
+	var should_be_passable: bool = Globals.darkness_level < 30.0
 
 	if should_be_passable != is_passable:
 		set_wall_state(should_be_passable)

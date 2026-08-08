@@ -428,7 +428,7 @@ shape = SubResource("BoxShape3D_7yui6")
 
 [node name="text" type="Label3D" parent="Main/DarknessGate" unique_id=538282966]
 transform = Transform3D(-0.0074694157, 0, 0.9999723, 0, 1, 0, -0.9999723, 0, -0.0074703544, -0.69615173, 0, -0.008267403)
-text = "Darkness < 50"
+text = "Darkness < 30"
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Main" unique_id=984274475]
 transform = Transform3D(-1.1591779, 0, 5.330045, 0, 4.1248884, 0, 0.6759039, 0, 9.141049, 57.678654, 6.113059, -101.89998)
