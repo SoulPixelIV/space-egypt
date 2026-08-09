@@ -11,9 +11,11 @@ const ARRIVAL_DISTANCE := 1.0
 
 @export var player: CharacterBody3D
 @export var speed := 2.5
+@export var remaining_spotlights := 2
 
 @onready var patrol_points = %PatrolPoints.get_children()
 @onready var spotlight: Area3D = $Spotlight
+@onready var spotlight2: Area3D = $Spotlight2
 @onready var state_text: Label3D = $EnemyStateText
 
 @onready var area_of_sight: Area3D = $AreaOfSight
@@ -45,6 +47,7 @@ func _ready() -> void:
 	sight_collision2.transform = line_of_sight2.transform
 	
 	spotlight.tree_exited.connect(_on_spotlight_destroyed)
+	spotlight2.tree_exited.connect(_on_spotlight_destroyed)
 
 func _physics_process(delta):
 	# Gravity
@@ -139,6 +142,12 @@ func _on_area_of_sight_body_entered(body: Node3D) -> void:
 		player = body
 		state = State.CHASE
 		print("PLAYER COLLISION")
+		
+func _on_area_of_sight_2_body_entered(body: Node3D) -> void:
+	if body.is_in_group("Player"):
+		player = body
+		state = State.CHASE
+		print("PLAYER COLLISION2")
 
 func _on_area_of_sight_body_exited(body: Node3D) -> void:
 	#player = null
@@ -151,11 +160,11 @@ func _on_collision_zone_body_entered(body: Node3D) -> void:
 	print("YES")
 
 func _on_spotlight_destroyed() -> void:
-	var tree := get_tree()
-	if tree:
-		get_tree().call_group("ui_control", "show_enemy_defeated")
-	queue_free()
+	remaining_spotlights -= 1
+	print("Verbleibende Spotlights: ", remaining_spotlights)
 
-
-func _on_area_of_sight_2_body_entered(body: Node3D) -> void:
-	pass # Replace with function body.
+	if remaining_spotlights <= 0:
+		var tree := get_tree()
+		if tree:
+			tree.call_group("ui_control", "show_enemy_defeated")
+		queue_free()
