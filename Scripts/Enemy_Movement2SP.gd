@@ -47,7 +47,7 @@ func _ready() -> void:
 	sight_collision2.transform = line_of_sight2.transform
 	
 	spotlight.tree_exited.connect(_on_spotlight_destroyed)
-	spotlight2.tree_exited.connect(_on_spotlight_destroyed)
+	spotlight2.tree_exited.connect(_on_spotlight2_destroyed)
 
 func _physics_process(delta):
 	# Gravity
@@ -160,11 +160,23 @@ func _on_collision_zone_body_entered(body: Node3D) -> void:
 	print("YES")
 
 func _on_spotlight_destroyed() -> void:
+	if is_instance_valid(area_of_sight):
+		area_of_sight.queue_free()
+
+	spotlight_was_destroyed()
+
+
+func _on_spotlight2_destroyed() -> void:
+	if is_instance_valid(area_of_sight2):
+		area_of_sight2.queue_free()
+
+	spotlight_was_destroyed()
+
+
+func spotlight_was_destroyed() -> void:
 	remaining_spotlights -= 1
 	print("Verbleibende Spotlights: ", remaining_spotlights)
 
 	if remaining_spotlights <= 0:
-		var tree := get_tree()
-		if tree:
-			tree.call_group("ui_control", "show_enemy_defeated")
+		get_tree().call_group("ui_control", "show_enemy_defeated")
 		queue_free()
