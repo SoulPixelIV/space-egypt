@@ -121,6 +121,6 @@ shape = SubResource("CylinderShape3D_fo5ed")
 
 [connection signal="body_entered" from="AreaOfSight" to="." method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="AreaOfSight" to="." method="_on_area_of_sight_body_exited"]
-[connection signal="body_entered" from="AreaOfSight2" to="." method="_on_area_of_sight_body_entered"]
 [connection signal="body_entered" from="AreaOfSight2" to="." method="_on_area_of_sight_2_body_entered"]
+[connection signal="body_entered" from="AreaOfSight2" to="." method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="AreaOfSight2" to="." method="_on_area_of_sight_body_exited"]

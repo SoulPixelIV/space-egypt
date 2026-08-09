@@ -4,7 +4,8 @@ enum State {
 	IDLE,
 	PATROL,
 	CHASE,
-	STUCK
+	STUCK,
+	WANDER
 }
 
 const ARRIVAL_DISTANCE := 1.0
@@ -31,6 +32,7 @@ const ARRIVAL_DISTANCE := 1.0
 var current_point := 0
 var state = State.IDLE
 var current_state = ""
+var wander_direction := Vector3.ZERO
 
 func _ready() -> void:
 	# Damit Fog ausschließlich diese Areas als Sichtbereiche erkennt.
@@ -80,6 +82,10 @@ func _physics_process(delta):
 		State.STUCK:
 			stuck()
 			current_state = "Stuck"
+			
+		State.WANDER:
+			wander_to_spotlight(delta)
+			current_state = "Wander"
 
 	move_and_slide()
 	
@@ -110,6 +116,14 @@ func chase(delta):
 		return
 
 	move_to_position(player.global_position, delta)
+	
+func wander_to_spotlight(delta: float) -> void:
+	# Godot-Vorwärtsrichtung ist die negative Z-Achse.
+	var target_angle := atan2(wander_direction.x, wander_direction.z)
+	rotation.y = lerp_angle(rotation.y, target_angle, 8.0 * delta)
+
+	velocity.x = wander_direction.x * speed
+	velocity.z = wander_direction.z * speed
 
 func idle(delta):
 	velocity.x = 0
@@ -138,16 +152,18 @@ func move_to_position(target: Vector3, delta):
 
 #Area of Sight
 func _on_area_of_sight_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Player"):
-		player = body
-		state = State.CHASE
-		print("PLAYER COLLISION")
+	if state != State.WANDER:
+		if body.is_in_group("Player"):
+			player = body
+			state = State.CHASE
+			print("PLAYER COLLISION")
 		
 func _on_area_of_sight_2_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Player"):
-		player = body
-		state = State.CHASE
-		print("PLAYER COLLISION2")
+	if state != State.WANDER:
+		if body.is_in_group("Player"):
+			player = body
+			state = State.CHASE
+			print("PLAYER COLLISION2")
 
 func _on_area_of_sight_body_exited(body: Node3D) -> void:
 	#player = null
@@ -160,17 +176,37 @@ func _on_collision_zone_body_entered(body: Node3D) -> void:
 	print("YES")
 
 func _on_spotlight_destroyed() -> void:
+	if is_queued_for_deletion():
+		return
+
 	if is_instance_valid(area_of_sight):
 		area_of_sight.queue_free()
+
+	# Spotlight2 ist noch vorhanden: dessen Richtung merken.
+	if is_instance_valid(spotlight2):
+		set_wander_direction(spotlight2)
 
 	spotlight_was_destroyed()
 
 
 func _on_spotlight2_destroyed() -> void:
+	if is_queued_for_deletion():
+		return
+
 	if is_instance_valid(area_of_sight2):
 		area_of_sight2.queue_free()
 
+	# Spotlight1 ist noch vorhanden: dessen Richtung merken.
+	if is_instance_valid(spotlight):
+		set_wander_direction(spotlight)
+
 	spotlight_was_destroyed()
+
+
+func set_wander_direction(remaining_spotlight: Area3D) -> void:
+	wander_direction = remaining_spotlight.global_transform.basis.z
+	wander_direction.y = 0
+	wander_direction = wander_direction.normalized()
 
 
 func spotlight_was_destroyed() -> void:
@@ -180,3 +216,6 @@ func spotlight_was_destroyed() -> void:
 	if remaining_spotlights <= 0:
 		get_tree().call_group("ui_control", "show_enemy_defeated")
 		queue_free()
+		return
+
+	state = State.WANDER
