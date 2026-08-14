@@ -94,9 +94,15 @@ func _physics_process(delta):
 		var collision := get_slide_collision(i)
 		var hit_body := collision.get_collider() as Node3D
 
+		#ENEMY HOLDER
 		if hit_body and hit_body.is_in_group("enemy_holder"):
 			state = State.STUCK
 			print("YES - enemy stuck")
+			
+		#WALL TRIGGER
+		if hit_body and hit_body.is_in_group("wall_trigger"):
+			state = State.STUCK
+			print("WALL TRIGGER")
 	
 	state_text.text = current_state
 
@@ -168,12 +174,8 @@ func _on_area_of_sight_2_body_entered(body: Node3D) -> void:
 func _on_area_of_sight_body_exited(body: Node3D) -> void:
 	#player = null
 	#state = State.PATROL
-	print("PLAYER EXIT")
-
-func _on_collision_zone_body_entered(body: Node3D) -> void:
-	#if body.is_in_group("enemy_holder"):
-	state = State.STUCK
-	print("YES")
+	#print("PLAYER EXIT")
+	pass
 
 func _on_spotlight_destroyed() -> void:
 	if is_queued_for_deletion():
@@ -210,6 +212,9 @@ func set_wander_direction(remaining_spotlight: Area3D) -> void:
 
 
 func spotlight_was_destroyed() -> void:
+	if not is_inside_tree():
+		return
+		
 	remaining_spotlights -= 1
 	print("Verbleibende Spotlights: ", remaining_spotlights)
 
