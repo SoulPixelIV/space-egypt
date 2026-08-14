@@ -6,6 +6,8 @@ extends SpringArm3D
 @export var shoulder_offset := Vector3(1.6, 0.8, -2)
 @export var offset_speed := 8.0
 
+@onready var player = %Player
+
 var following: Node3D = null
 var x_target = 0.0
 var y_target = 0.0
@@ -17,6 +19,9 @@ func _process(delta: float) -> void:
 
 		if Input.is_action_pressed("aim"):
 			target_offset = shoulder_offset
+			player.currently_aiming = true
+		elif Input.is_action_just_released("aim"):
+			player.currently_aiming = false
 
 		current_offset = current_offset.lerp(target_offset, offset_speed * delta)
 

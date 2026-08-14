@@ -149,3 +149,7 @@ func _on_spotlight_destroyed() -> void:
 	if tree:
 		get_tree().call_group("ui_control", "show_enemy_defeated")
 	queue_free()
+
+func _on_damage_field_body_entered(body: Node3D) -> void:
+	if body.is_in_group("Player"):
+		body.hp -= 1

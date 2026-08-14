@@ -42,6 +42,9 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_fo5ed"]
 radius = 0.77490234
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_leowk"]
+size = Vector3(1.7744141, 1.5683594, 2.0551758)
+
 [node name="Enemy" type="CharacterBody3D" unique_id=1382371117 groups=["enemy"]]
 transform = Transform3D(-0.3646494, 0, -0.93114495, 0, 1, 0, 0.93114495, 0, -0.3646494, 0, 0, 0)
 script = ExtResource("1_leowk")
@@ -96,5 +99,13 @@ offset = Vector2(43.26, 0)
 text = "Patrolling"
 horizontal_alignment = 0
 
+[node name="DamageField" type="Area3D" parent="." unique_id=221571473]
+transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 0.9999998, -0.08974826, 0, 0.82506925)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageField" unique_id=1717954092]
+transform = Transform3D(1.0000162, 0, -1.1026859e-06, 0, 1, 0, 1.1026859e-06, 0, 1.0000162, 0.04345745, 0.2841797, 0.52758837)
+shape = SubResource("BoxShape3D_leowk")
+
 [connection signal="body_entered" from="AreaOfSight" to="." method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="AreaOfSight" to="." method="_on_area_of_sight_body_exited"]
+[connection signal="body_entered" from="DamageField" to="." method="_on_damage_field_body_entered"]

@@ -4,6 +4,9 @@ extends Node
 @onready var message_label = $MessageText
 @onready var message2_label = $MessageText2
 @onready var secret_label = $SecretLevel
+@onready var hp_label = $HPLevel
+
+@onready var player = %Player
 
 func _ready() -> void:
 	add_to_group("ui_control")
@@ -13,6 +16,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	darkness_label.text = str(roundi(Globals.darkness_level))
 	secret_label.text = str(Globals.secrets)
+	hp_label.text = str(player.hp)
 	if Globals.darkness_level > 80:
 		message2_label.text = "Press 'P' to restart Level"
 	else:

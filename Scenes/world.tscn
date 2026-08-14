@@ -324,6 +324,24 @@ offset_bottom = 78.0
 theme_override_font_sizes/font_size = 24
 text = "/1"
 
+[node name="HP" type="Label" parent="UI" unique_id=1980357499]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 102.0
+offset_right = 231.0
+offset_bottom = 155.0
+theme_override_font_sizes/font_size = 38
+text = "HP:"
+
+[node name="HPLevel" type="Label" parent="UI" unique_id=1118922487]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 102.0
+offset_right = 295.0
+offset_bottom = 155.0
+theme_override_font_sizes/font_size = 38
+text = "100"
+
 [node name="GameManager" type="Node" parent="." unique_id=1836719148]
 script = ExtResource("1_5a7ea")
 
@@ -339,6 +357,7 @@ unique_name_in_owner = true
 spring_length = 5.0
 
 [node name="Player" parent="." unique_id=268844224 instance=ExtResource("5_7yui6")]
+unique_name_in_owner = true
 transform = Transform3D(-0.591042, 0, -0.80664057, 0, 1, 0, 0.80664057, 0, -0.591042, 6.7243576, 3.7486129, -6.1519585)
 
 [node name="Enemy" parent="." unique_id=1382371117 instance=ExtResource("7_7yui6")]

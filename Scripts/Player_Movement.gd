@@ -1,9 +1,15 @@
 extends CharacterBody3D
 
 const SPEED = 7.2
+const AIM_SPEED = 2.1
 const JUMP_VELOCITY = 4.5
+@export var shoot_cooldown := 0.5
+@export var hp = 100
 
 var camera: Node3D
+
+var currently_aiming = false
+var can_shoot := true
 
 @export var bullet: PackedScene
 
@@ -14,9 +20,12 @@ func _ready() -> void:
 	camera.set_following(self)
 
 func _physics_process(delta: float) -> void:
-	#Shooting
-	if Input.is_action_just_pressed("shoot"):
+	# Shooting
+	if Input.is_action_just_pressed("shoot") and can_shoot and currently_aiming:
 		weapon_shooting()
+		can_shoot = false
+		await get_tree().create_timer(shoot_cooldown).timeout
+		can_shoot = true
 		
 	#Gravity
 	if not is_on_floor():
@@ -30,12 +39,20 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction = input_dir.rotated(-camera.rotation.y)
 	
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.y * SPEED
+	if !currently_aiming:
+		if direction:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.y * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.z = move_toward(velocity.z, 0, SPEED)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		if direction:
+			velocity.x = direction.x * AIM_SPEED
+			velocity.z = direction.y * AIM_SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, AIM_SPEED)
+			velocity.z = move_toward(velocity.z, 0, AIM_SPEED)
 
 	#Rotate Player to Camera Direction
 	rotation.y = camera.rotation.y
