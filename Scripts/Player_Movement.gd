@@ -58,6 +58,10 @@ func _physics_process(delta: float) -> void:
 	rotation.y = camera.rotation.y
 
 	move_and_slide()
+	
+	#Death
+	if hp <= 0:
+		get_tree().reload_current_scene()
 
 func weapon_shooting():
 	var bullet_inst = bullet.instantiate()
