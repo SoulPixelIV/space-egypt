@@ -131,10 +131,11 @@ func move_to_position(target: Vector3, delta):
 
 #Area of Sight
 func _on_area_of_sight_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Player"):
-		player = body
-		state = State.CHASE
-		print("PLAYER COLLISION")
+	if state != State.STUCK:
+		if body.is_in_group("Player"):
+			player = body
+			state = State.CHASE
+			print("PLAYER COLLISION")
 
 func _on_area_of_sight_body_exited(body: Node3D) -> void:
 	#player = null
@@ -153,10 +154,11 @@ func _on_spotlight_destroyed() -> void:
 	queue_free()
 
 func _on_damage_field_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Player"):
-		damage_target = body
-		damage_timer.start()
-		print("PLAYER IN DAMAGE FIELD")
+	if state != State.STUCK:
+		if body.is_in_group("Player"):
+			damage_target = body
+			damage_timer.start()
+			print("PLAYER IN DAMAGE FIELD")
 
 func _on_damage_field_body_exited(body: Node3D) -> void:
 	if body == damage_target:

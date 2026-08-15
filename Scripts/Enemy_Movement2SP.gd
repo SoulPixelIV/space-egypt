@@ -229,10 +229,11 @@ func spotlight_was_destroyed() -> void:
 
 
 func _on_damage_field_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Player"):
-		damage_target = body
-		damage_timer.start()
-		print("PLAYER IN DAMAGE FIELD")
+	if state != State.STUCK and state != State.WANDER:
+		if body.is_in_group("Player"):
+			damage_target = body
+			damage_timer.start()
+			print("PLAYER IN DAMAGE FIELD")
 
 func _on_damage_field_body_exited(body: Node3D) -> void:
 	if body == damage_target:
