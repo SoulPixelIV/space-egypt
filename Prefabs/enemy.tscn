@@ -49,7 +49,7 @@ size = Vector3(1.7744141, 1.5683594, 2.0551758)
 [node name="Enemy" type="CharacterBody3D" unique_id=1382371117 groups=["enemy"]]
 transform = Transform3D(-0.3646494, 0, -0.93114495, 0, 1, 0, 0.93114495, 0, -0.3646494, 0, 0, 0)
 script = ExtResource("1_leowk")
-speed = 2.9
+speed = 3.6
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1148287908]
 material_override = SubResource("StandardMaterial3D_5a7ea")

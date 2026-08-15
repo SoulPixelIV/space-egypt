@@ -358,7 +358,7 @@ spring_length = 5.0
 
 [node name="Player" parent="." unique_id=268844224 instance=ExtResource("5_7yui6")]
 unique_name_in_owner = true
-transform = Transform3D(-0.591042, 0, -0.80664057, 0, 1, 0, 0.80664057, 0, -0.591042, 6.7243576, 3.7486129, -6.1519585)
+transform = Transform3D(-0.591042, 0, -0.80664057, 0, 1, 0, 0.80664057, 0, -0.591042, 72.03746, 12.279968, -25.004648)
 
 [node name="Enemy" parent="." unique_id=1382371117 instance=ExtResource("7_7yui6")]
 transform = Transform3D(-0.59754133, 0, -0.80183816, 0, 1, 0, 0.80183816, 0, -0.59754133, 43.633034, 6.945346, -0.15001726)
@@ -539,9 +539,6 @@ speed = 4.0
 transform = Transform3D(-1.6681241, 0, 9.375426, 0, 1.5663539, 0, 0.7829335, 0, 19.975363, 70.83754, 6.113059, -25.263779)
 mesh = SubResource("BoxMesh_5v1tr")
 
-[node name="Enemy" parent="Main" unique_id=1485388187 instance=ExtResource("13_e0ngr")]
-transform = Transform3D(-1.3804014, 0, -0.06590581, 0, 1, 0, 0.045165464, 0, -2.0142913, 80.604164, 7.3749514, -37.56038)
-
 [node name="MeshInstance3D16" type="MeshInstance3D" parent="Main" unique_id=1786835316]
 transform = Transform3D(1.6404018, 0, 5.169747, 0, 1.566354, 0, -0.55368215, 0, 15.316478, 52.713074, 6.113059, -18.932718)
 mesh = SubResource("BoxMesh_5v1tr")
@@ -684,5 +681,8 @@ shape = SubResource("BoxShape3D_5v1tr")
 
 [node name="Enemy4" parent="." unique_id=1307027015 instance=ExtResource("7_7yui6")]
 transform = Transform3D(-0.9946363, 0, -0.10343472, 0, 1, 0, 0.10343472, 0, -0.9946363, 68.847786, 6.959936, -6.5587883)
+
+[node name="Enemy2SP" parent="." unique_id=233595385 instance=ExtResource("13_e0ngr")]
+transform = Transform3D(-1.3742559, 0, -0.20097071, 0, 1, 0, 0.13772595, 0, -2.005324, 81.97203, 7.868767, -29.796951)
 
 [connection signal="body_entered" from="Main/Secret/Area3D" to="Main/Secret/Area3D" method="_on_body_entered"]

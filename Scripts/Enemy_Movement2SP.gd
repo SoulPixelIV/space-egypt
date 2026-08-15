@@ -13,6 +13,8 @@ const ARRIVAL_DISTANCE := 1.0
 @export var player: CharacterBody3D
 @export var speed := 2.5
 @export var remaining_spotlights := 2
+@onready var damage_timer: Timer = $DamageTime
+var damage_target: CharacterBody3D = null
 
 @onready var patrol_points = %PatrolPoints.get_children()
 @onready var spotlight: Area3D = $Spotlight
@@ -224,3 +226,23 @@ func spotlight_was_destroyed() -> void:
 		return
 
 	state = State.WANDER
+
+
+func _on_damage_field_body_entered(body: Node3D) -> void:
+	if body.is_in_group("Player"):
+		damage_target = body
+		damage_timer.start()
+		print("PLAYER IN DAMAGE FIELD")
+
+func _on_damage_field_body_exited(body: Node3D) -> void:
+	if body == damage_target:
+		damage_target = null
+		damage_timer.stop()
+		print("PLAYER LEFT DAMAGE FIELD")
+
+func _on_damage_time_timeout() -> void:
+	if is_instance_valid(damage_target):
+		damage_target.hp -= 1
+		print("Player HP:", damage_target.hp)
+	else:
+		damage_timer.stop()
