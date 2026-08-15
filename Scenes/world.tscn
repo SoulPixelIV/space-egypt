@@ -634,6 +634,39 @@ shape = SubResource("BoxShape3D_a02cp")
 [node name="Enemy3" parent="Main" unique_id=447684695 instance=ExtResource("7_7yui6")]
 transform = Transform3D(0.64019036, 0, 0.7682164, 0, 1, 0, -0.7682164, 0, 0.64019036, 27.161278, 6.945346, -33.03739)
 
+[node name="DarknessGate2" type="MeshInstance3D" parent="Main" unique_id=1635689017]
+transform = Transform3D(0.11606116, 0, -3.9166112, 0, 6.3342037, 0, -0.09543894, 0, -4.762904, 101.279236, 8.622127, -61.6558)
+mesh = SubResource("BoxMesh_ikia7")
+script = ExtResource("11_ikia7")
+darkness_level = 80.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Main/DarknessGate2" unique_id=1206883400]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main/DarknessGate2/StaticBody3D" unique_id=546578701]
+shape = SubResource("BoxShape3D_7yui6")
+
+[node name="text" type="Label3D" parent="Main/DarknessGate2" unique_id=922073007]
+transform = Transform3D(-0.0074694157, 0, 0.9999723, 0, 1, 0, -0.9999723, 0, -0.0074703544, -0.69615173, 0, -0.008267403)
+text = "Darkness < 80"
+
+[node name="Enemy4" parent="Main" unique_id=1375502368 instance=ExtResource("7_7yui6")]
+transform = Transform3D(0.22719514, 0, -0.9738493, 0, 1, 0, 0.9738493, 0, 0.22719514, 95.57876, 6.959936, -49.03238)
+
+[node name="Enemy5" parent="Main" unique_id=1048619022 instance=ExtResource("7_7yui6")]
+transform = Transform3D(0.7749444, 0, -0.63202935, 0, 1, 0, 0.63202935, 0, 0.7749444, 90.89998, 6.959936, -57.093246)
+
+[node name="EnemyHolder2" type="MeshInstance3D" parent="Main" unique_id=1314735675 groups=["enemy_holder"]]
+transform = Transform3D(0.3857825, 0, -10.465864, 0, 3.0453312, 0, 0.72478837, 0, 5.570659, 78.75701, 6.530427, -58.385124)
+mesh = SubResource("BoxMesh_0fj1v")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Main/EnemyHolder2" unique_id=434330381 groups=["enemy_holder"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main/EnemyHolder2/StaticBody3D" unique_id=2005016836 groups=["enemy_holder"]]
+shape = SubResource("BoxShape3D_5v1tr")
+
+[node name="Enemy6" parent="Main" unique_id=648828084 instance=ExtResource("7_7yui6")]
+transform = Transform3D(0.7239069, 0, -0.6898977, 0, 1, 0, 0.6898977, 0, 0.7239069, 85.46724, 6.959936, -0.07771587)
+
 [node name="Enemy2" parent="." unique_id=810348087 instance=ExtResource("7_7yui6")]
 transform = Transform3D(0.11679226, 0, 0.9931564, 0, 1, 0, -0.9931564, 0, 0.11679226, 36.070835, 6.945346, -17.554913)
 

@@ -158,14 +158,14 @@ func move_to_position(target: Vector3, delta):
 
 #Area of Sight
 func _on_area_of_sight_body_entered(body: Node3D) -> void:
-	if state != State.WANDER:
+	if state != State.WANDER and state != State.STUCK:
 		if body.is_in_group("Player"):
 			player = body
 			state = State.CHASE
 			print("PLAYER COLLISION")
 		
 func _on_area_of_sight_2_body_entered(body: Node3D) -> void:
-	if state != State.WANDER:
+	if state != State.WANDER and state != State.STUCK:
 		if body.is_in_group("Player"):
 			player = body
 			state = State.CHASE

@@ -1,5 +1,7 @@
 extends MeshInstance3D
 
+@export var darkness_level = 30.0
+
 @onready var wall_body: StaticBody3D = $StaticBody3D
 @onready var wall_collision: CollisionShape3D = $StaticBody3D/CollisionShape3D
 
@@ -10,7 +12,7 @@ func _ready() -> void:
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 
 func _process(_delta: float) -> void:
-	var should_be_passable: bool = Globals.darkness_level < 30.0
+	var should_be_passable: bool = Globals.darkness_level < darkness_level
 
 	if should_be_passable != is_passable:
 		set_wall_state(should_be_passable)
