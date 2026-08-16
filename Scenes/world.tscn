@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bofn4tvijfnpi" path="res://Scripts/Secret.gd" id="12_7yui6"]
 [ext_resource type="PackedScene" uid="uid://dadsobsf0gh5b" path="res://Prefabs/light.tscn" id="13_c5t2i"]
 [ext_resource type="PackedScene" uid="uid://c43vo82ayjklp" path="res://Prefabs/enemy2SP.tscn" id="13_e0ngr"]
+[ext_resource type="Script" uid="uid://bld2fvcxxresh" path="res://Scripts/Goal.gd" id="13_kn0ld"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5v1tr"]
 panorama = ExtResource("2_k7acu")
@@ -253,6 +254,9 @@ albedo_color = Color(1, 0.47843137, 0.45882353, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_e0ngr"]
 material = SubResource("StandardMaterial3D_kn0ld")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c5t2i"]
+size = Vector3(9.820679, 8.695557, 11.643799)
 
 [node name="World" type="Node3D" unique_id=263138717]
 
@@ -834,6 +838,14 @@ shape = SubResource("BoxShape3D_5v1tr")
 [node name="Enemy6" parent="Main" unique_id=648828084 instance=ExtResource("7_7yui6")]
 transform = Transform3D(0.7239069, 0, -0.6898977, 0, 1, 0, 0.6898977, 0, 0.7239069, 85.46724, 6.959936, -0.07771587)
 
+[node name="Goal" type="Area3D" parent="Main" unique_id=596300107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.74336, 7.5355253, -102.44411)
+script = ExtResource("13_kn0ld")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main/Goal" unique_id=2137587590]
+transform = Transform3D(0.6983528, 0, 0.7157537, 0, 1, 0, -0.7157537, 0, 0.6983528, 19.917412, 2.0483198, 31.226654)
+shape = SubResource("BoxShape3D_c5t2i")
+
 [node name="Enemy2" parent="." unique_id=810348087 instance=ExtResource("7_7yui6")]
 transform = Transform3D(0.11679226, 0, 0.9931564, 0, 1, 0, -0.9931564, 0, 0.11679226, 36.070835, 6.945346, -17.554913)
 
@@ -856,3 +868,4 @@ transform = Transform3D(-0.9946363, 0, -0.10343472, 0, 1, 0, 0.10343472, 0, -0.9
 transform = Transform3D(-1.3742559, 0, -0.20097071, 0, 1, 0, 0.13772595, 0, -2.005324, 81.97203, 7.868767, -29.796951)
 
 [connection signal="body_entered" from="Main/Secret/Area3D" to="Main/Secret/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="Main/Goal" to="Main/Goal" method="_on_body_entered"]

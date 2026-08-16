@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cl8frjco7u38g"]
+
+[ext_resource type="Texture2D" uid="uid://bquqr4lgcn7o8" path="res://Textures/skybox_space.jpg" id="1_5j2cu"]
+
+[node name="End" type="Node2D" unique_id=816540180]
+
+[node name="SkyboxSpace" type="Sprite2D" parent="." unique_id=1242344808]
+position = Vector2(521, 402)
+texture = ExtResource("1_5j2cu")
+
+[node name="Control" type="Control" parent="." unique_id=248185564]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control" unique_id=426791250]
+layout_mode = 0
+offset_left = 677.0
+offset_top = 456.0
+offset_right = 1206.0
+offset_bottom = 542.0
+theme_override_font_sizes/font_size = 62
+text = "Level 1 Complete!"
+
+[node name="Label2" type="Label" parent="Control" unique_id=219338609]
+layout_mode = 0
+offset_left = 803.0
+offset_top = 536.0
+offset_right = 1170.0
+offset_bottom = 595.0
+theme_override_font_sizes/font_size = 35
+text = "Congratulations"
