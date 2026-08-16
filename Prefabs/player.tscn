@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bpe3hqsj578fb" path="res://Scripts/Player_Movement.gd" id="1_5wxv7"]
 [ext_resource type="PackedScene" uid="uid://dspeg51lom51d" path="res://Prefabs/bullet.tscn" id="2_y5hcb"]
+[ext_resource type="AudioStream" uid="uid://2cmh4tb0i88i" path="res://Sounds/gun-shot.mp3" id="3_y5hcb"]
+[ext_resource type="AudioStream" uid="uid://cvhnneibeii24" path="res://Sounds/darkness.mp3" id="4_2nftw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yp4wr"]
 
@@ -34,3 +36,11 @@ mesh = SubResource("BoxMesh_o06y3")
 
 [node name="ShootPoint" type="Node3D" parent="." unique_id=19522941]
 transform = Transform3D(0.99999946, 0, 0, 0, 1, 0, 0, 0, 0.99999946, 0.7399521, 0.36481762, -1.232539)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1106445507]
+stream = ExtResource("3_y5hcb")
+volume_db = -20.935
+
+[node name="DarknessSound" type="AudioStreamPlayer3D" parent="." unique_id=515784920]
+stream = ExtResource("4_2nftw")
+volume_db = -17.944

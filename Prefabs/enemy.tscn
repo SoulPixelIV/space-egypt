@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cnaat21qtehof" path="res://Scripts/Enemy_Movement.gd" id="1_leowk"]
 [ext_resource type="Script" uid="uid://llosdp4pii5k" path="res://Scripts/Spotlight.gd" id="2_lgw76"]
+[ext_resource type="AudioStream" uid="uid://b66ds7km4e5ly" path="res://Sounds/glass-shatter.mp3" id="3_t4g6b"]
+[ext_resource type="AudioStream" uid="uid://hvlosoturegh" path="res://Sounds/alarm.mp3" id="4_30yes"]
+[ext_resource type="AudioStream" uid="uid://bq1eh1fjk5kqx" path="res://Sounds/stuck.mp3" id="5_n7q57"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5a7ea"]
 albedo_color = Color(1, 0, 0, 1)
@@ -90,6 +93,10 @@ mesh = SubResource("CylinderMesh_fo5ed")
 transform = Transform3D(0.9999997, 0, 0, 0, -1.1054787e-08, -1, 0, 0.25290406, -4.371139e-08, 1.4901161e-08, 0.352, 0.44199994)
 shape = SubResource("CylinderShape3D_fo5ed")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Spotlight" unique_id=1339685665]
+stream = ExtResource("3_t4g6b")
+volume_db = -7.477
+
 [node name="EnemyText" type="Label3D" parent="." unique_id=1302413213]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.351388, 0)
 offset = Vector2(-56.7, 0)
@@ -110,6 +117,14 @@ shape = SubResource("BoxShape3D_leowk")
 
 [node name="DamageTime" type="Timer" parent="." unique_id=733287294]
 wait_time = 0.05
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1185366438]
+stream = ExtResource("4_30yes")
+volume_db = -7.477
+
+[node name="StuckSound" type="AudioStreamPlayer3D" parent="." unique_id=1518622189]
+stream = ExtResource("5_n7q57")
+volume_db = -17.944
 
 [connection signal="body_entered" from="AreaOfSight" to="." method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="AreaOfSight" to="." method="_on_area_of_sight_body_exited"]

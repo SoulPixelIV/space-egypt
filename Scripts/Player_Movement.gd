@@ -66,8 +66,13 @@ func _physics_process(delta: float) -> void:
 func weapon_shooting():
 	var bullet_inst = bullet.instantiate()
 	get_tree().current_scene.add_child(bullet_inst)
+	
+	$AudioStreamPlayer3D.play()
 
 	bullet_inst.global_position = shoot_point.global_position
 
 	# Kamerarichtung
 	bullet_inst.direction = -camera.global_transform.basis.z
+
+func play_enemy_defeated_sound() -> void:
+	$DarknessSound.play()

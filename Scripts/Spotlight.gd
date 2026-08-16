@@ -24,3 +24,6 @@ func _process(delta: float) -> void:
 			get_parent()._on_spotlight_destroyed()
 		else:
 			queue_free()
+			
+func play_sound():
+	$AudioStreamPlayer3D.play()

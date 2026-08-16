@@ -35,6 +35,8 @@ var current_point := 0
 var state = State.IDLE
 var current_state = ""
 var wander_direction := Vector3.ZERO
+var played_sound = false
+var played_sound2 = false
 
 func _ready() -> void:
 	# Damit Fog ausschließlich diese Areas als Sichtbereiche erkennt.
@@ -73,6 +75,9 @@ func _physics_process(delta):
 			current_state = "Patrolling"
 
 		State.CHASE:
+			if !played_sound:
+				$AudioStreamPlayer3D.play()
+				played_sound = true
 			chase(delta)
 			current_state = State.CHASE
 			current_state = "Chasing"
@@ -82,6 +87,9 @@ func _physics_process(delta):
 			current_state = "Idling"
 			
 		State.STUCK:
+			if !played_sound2:
+				$StuckSound.play()
+				played_sound2 = true
 			stuck()
 			current_state = "Stuck"
 			
@@ -222,6 +230,7 @@ func spotlight_was_destroyed() -> void:
 
 	if remaining_spotlights <= 0:
 		get_tree().call_group("ui_control", "show_enemy_defeated")
+		get_tree().call_group("Player", "play_enemy_defeated_sound")
 		queue_free()
 		return
 

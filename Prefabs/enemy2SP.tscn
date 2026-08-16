@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://c43vo82ayjklp"]
 
 [ext_resource type="Script" uid="uid://dv2bygpbq2gyy" path="res://Scripts/Enemy_Movement2SP.gd" id="1_2g3ic"]
+[ext_resource type="AudioStream" uid="uid://b66ds7km4e5ly" path="res://Sounds/glass-shatter.mp3" id="2_04cy0"]
+[ext_resource type="AudioStream" uid="uid://hvlosoturegh" path="res://Sounds/alarm.mp3" id="3_b3c6m"]
+[ext_resource type="AudioStream" uid="uid://bq1eh1fjk5kqx" path="res://Sounds/stuck.mp3" id="4_rr8ml"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2g3ic"]
 albedo_color = Color(0.28235295, 0.20784314, 1, 1)
@@ -99,6 +102,10 @@ mesh = SubResource("CylinderMesh_fo5ed")
 transform = Transform3D(1.6048484, -7.450581e-09, 7.1054274e-15, 0, -8.436273e-09, -1.7514236, 0, 0.19299947, -7.6557164e-08, 2.6077032e-08, 0.352, 0.4420001)
 shape = SubResource("CylinderShape3D_fo5ed")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Spotlight" unique_id=55364898]
+stream = ExtResource("2_04cy0")
+volume_db = -7.477
+
 [node name="EnemyText" type="Label3D" parent="." unique_id=1302413213]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 1.351388, 0)
 offset = Vector2(-56.7, 0)
@@ -122,6 +129,10 @@ mesh = SubResource("CylinderMesh_fo5ed")
 transform = Transform3D(1.4107397, -1.4901161e-08, 5.3290705e-15, 0, -9.276606e-09, -1.6107321, 0, 0.21222407, -7.0407346e-08, -4.0978193e-08, 0.35199994, 0.44199997)
 shape = SubResource("CylinderShape3D_fo5ed")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Spotlight2" unique_id=1723052057]
+stream = ExtResource("2_04cy0")
+volume_db = -7.477
+
 [node name="DamageField" type="Area3D" parent="." unique_id=1406849282]
 transform = Transform3D(0.9999998, 0, 0, 0, 1, 0, 0, 0, 0.9999998, -0.08974826, 0, 0.82506925)
 
@@ -131,6 +142,14 @@ shape = SubResource("BoxShape3D_2g3ic")
 
 [node name="DamageTime" type="Timer" parent="." unique_id=16820653]
 wait_time = 0.05
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1969491728]
+stream = ExtResource("3_b3c6m")
+volume_db = -7.477
+
+[node name="StuckSound" type="AudioStreamPlayer3D" parent="." unique_id=2007029511]
+stream = ExtResource("4_rr8ml")
+volume_db = -17.944
 
 [connection signal="body_entered" from="AreaOfSight" to="." method="_on_area_of_sight_body_entered"]
 [connection signal="body_exited" from="AreaOfSight" to="." method="_on_area_of_sight_body_exited"]
